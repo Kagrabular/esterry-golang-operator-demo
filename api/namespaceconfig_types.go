@@ -6,7 +6,7 @@ import (
 )
 
 // NamespaceConfigSpec defines the desired state of NamespaceConfig
-type NamespaceConfigSpec struct {
+type NamespaceConfigSpec struct { // define desired state of CRD
 	Labels map[string]string `json:"labels,omitempty"`
 }
 

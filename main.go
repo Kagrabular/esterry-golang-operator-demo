@@ -41,20 +41,41 @@ func (r *NamespaceReconciler) Reconcile(ctx context.Context, req reconcile.Reque
 	var nsConfig NamespaceConfig
 	nsConfigKey := client.ObjectKey{Name: "default"} // Assume a default config
 	if err := r.client.Get(ctx, nsConfigKey, &nsConfig); err != nil {
-		logger.Info("No NamespaceConfig found, proceeding without labels")
-	} else {
-		if ns.Labels == nil {
-			ns.Labels = make(map[string]string)
+		logger.Info("No NamespaceConfig found, creating default")
+		defaultConfig := NamespaceConfig{
+			TypeMeta: metav1.TypeMeta{
+				APIVersion: "example.com/v1",
+				Kind:       "NamespaceConfig",
+			},
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "default",
+			},
+			Spec: NamespaceConfigSpec{
+				Labels: map[string]string{
+					"environment": "default",
+					"owner":       "admin",
+				},
+			},
 		}
-		for key, value := range nsConfig.Spec.Labels {
-			ns.Labels[key] = value
-		}
-		if err := r.client.Update(ctx, &ns); err != nil {
-			logger.Error(err, "Failed to update namespace with labels")
+		if err := r.client.Create(ctx, &defaultConfig); err != nil {
+			logger.Error(err, "Failed to create default NamespaceConfig")
 			return reconcile.Result{}, err
 		}
-		logger.Info("Namespace labeled successfully", "name", req.NamespacedName)
+		logger.Info("Default NamespaceConfig created successfully")
+		return reconcile.Result{}, nil // Requeue to ensure processing with the new config
 	}
+
+	if ns.Labels == nil {
+		ns.Labels = make(map[string]string)
+	}
+	for key, value := range nsConfig.Spec.Labels {
+		ns.Labels[key] = value
+	}
+	if err := r.client.Update(ctx, &ns); err != nil {
+		logger.Error(err, "Failed to update namespace with labels")
+		return reconcile.Result{}, err
+	}
+	logger.Info("Namespace labeled successfully", "name", req.NamespacedName)
 
 	return reconcile.Result{}, nil
 }

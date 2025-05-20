@@ -21,13 +21,13 @@ This script automates the creation (if needed) and retrieval of an Amazon ECR re
 2. Make the script executable:
 
    ```bash
-   chmod +x create-ecr-repo.sh
+   chmod +x scripts/aws-ecr-create-deploy.sh
    ```
 
 ## Usage
 
 ```bash
-./create-ecr-repo.sh [--name REPO_NAME] [--region AWS_REGION] [--profile AWS_PROFILE]
+./scripts/aws-ecr-create-deploy.sh [--name REPO_NAME] [--region AWS_REGION] [--profile AWS_PROFILE]
 ```
 
 ### Options
@@ -46,17 +46,17 @@ This script automates the creation (if needed) and retrieval of an Amazon ECR re
 TAG=$(git rev-parse --short HEAD)
 
 # Run the script (override defaults if desired)
-./create-ecr-repo.sh --name demo-pe-service-java --region us-west-2 --profile my-aws-profile
+./scripts/aws-ecr-create-deploy.sh --name my-ecr-repo --region us-west-2 --profile my-aws-profile
 
 # Output will include:
 # → Using AWS profile: my-aws-profile
 # → AWS region:       us-west-2
-# → Repository name:  demo-pe-service-java
-# Repository URI: 123456789012.dkr.ecr.us-west-2.amazonaws.com/demo-pe-service-java
+# → Repository name:  my-ecr-repo
+# Repository URI: 123456789012.dkr.ecr.us-west-2.amazonaws.com/my-ecr-repo
 
 # Build and push your Docker image:
-docker build -t 123456789012.dkr.ecr.us-west-2.amazonaws.com/demo-pe-service-java:$TAG .
-docker push 123456789012.dkr.ecr.us-west-2.amazonaws.com/demo-pe-service-java:$TAG
+docker build -t 123456789012.dkr.ecr.us-west-2.amazonaws.com/my-ecr-repo:$TAG .
+docker push 123456789012.dkr.ecr.us-west-2.amazonaws.com/my-ecr-repo:$TAG
 ```
 
 ## Considerations

@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: namespaceconfigs.example.com
+  name: namespaceconfigs.example.com # collision free examples, obviously orient this to org or project or whatever
 spec:
-  group: example.com
+  group: example.com # collision free examples, obviously orient this to org or project or whatever
   names:
     kind: NamespaceConfig
     listKind: NamespaceConfigList

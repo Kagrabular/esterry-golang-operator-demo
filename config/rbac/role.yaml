@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: golang-operator
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs:     ["get","list","watch","update","patch"]
+  - apiGroups: ["example.com"]
+    resources: ["namespaceconfigs","namespaceconfigs/status"]
+    verbs:     ["get","list","watch","create","update","patch"]

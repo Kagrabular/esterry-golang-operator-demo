@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  operator:
+    image: local-operator:latest
+    user: root                    # run container as root so /root/.kube/config is readable
+    command: ["/usr/local/bin/operator"]
+    volumes:
+      - /Users/esterry/.kube/config:/root/.kube/config:ro # this is obviously machine specific, for local testing you'd want to point to your volume for kube config
+    environment:
+      - KUBECONFIG=/root/.kube/config
+    restart: on-failure

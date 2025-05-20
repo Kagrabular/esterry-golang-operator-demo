@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-operator
+  labels:
+    app: golang-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golang-operator
+  template:
+    metadata:
+      labels:
+        app: golang-operator
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: operator
+          image: <AWS_ACCNT_NUMBER>.dkr.ecr.us-west-2.amazonaws.com/<ECR_REPO_NAME>:<IMAGE_TAG>
+          imagePullPolicy:  IfNotPresent
+          # command: ["/usr/local/bin/operator"]  # optional override
+          args: []
+          # If you need to override KUBECONFIG inside the pod, mount/configure it here
+          # volumeMounts:
+          #   - name: kubeconfig
+          #     mountPath: /root/.kube/config
+          #     readOnly: true
+      # volumes:
+      #   - name: kubeconfig
+      #     hostPath:
+      #       path: /home/youruser/.kube/config
+      #       type: File
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default

@@ -5,7 +5,9 @@ services:
     user: root                    # run container as root so /root/.kube/config is readable
     command: ["/usr/local/bin/operator"]
     volumes:
-      - /Users/esterry/.kube/config:/root/.kube/config:ro # this is obviously machine specific, for local testing you'd want to point to your volume for kube config
+      # Mount your kubeconfig from the host—this uses $KUBECONFIG if set, otherwise defaults ex. export KUBECONFIG=/path/to/your/kubeconfig
+      # to ~/.kube/config. Works on macOS/Linux without hard‐coding your username.
+      - ${KUBECONFIG:-${HOME}/.kube/config}:/root/.kube/config:ro
     environment:
       - KUBECONFIG=/root/.kube/config
     restart: on-failure

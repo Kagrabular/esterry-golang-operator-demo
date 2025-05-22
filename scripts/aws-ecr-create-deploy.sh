@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run TAG=$(git rev-parse --short HEAD) after you run this script in the repo you're deploying from to set the tag. Then docker build -t <whateverthiscomesoutas>.dkr.ecr.us-west-2.amazonaws.com/demo-pe-service-java:$TAG .
+# run TAG=$(git rev-parse --short HEAD) after you run this script in the repo you're deploying from to set the tag. Then docker build -t <whateverthiscomesoutas>.dkr.ecr.us-west-2.amazonaws.com/<ECR_REPO_NAME>:$TAG .
 set -euo pipefail
 
 # defaults

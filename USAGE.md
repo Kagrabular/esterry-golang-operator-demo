@@ -7,7 +7,7 @@
 - **kubectl** configured for your target cluster  
 - **AWS CLI** (for EKS)
 - **Docker Compose** (for local smoke-run)
-- **A pre-existing ECR repository** (for EKS)
+- **A pre-existing ECR repository** (for EKS) ([scripts/ecr-create-USAGE.md](scripts/ecr-create-USAGE.md) might be helpful)
 - **Kind** (for local end-to-end testing)  
 
 ---

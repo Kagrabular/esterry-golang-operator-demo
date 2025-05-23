@@ -62,7 +62,8 @@
 ## End-to-End in Kind
 
 1. **Create a Kind cluster**
-   2. This local testing procedure relies on [Kind](https://kind.sigs.k8s.io/) to create a local Kubernetes cluster. If you don't have Kind installed follow the link to install it for your machine. You can deploy and test this in any local k8s cluster following a similar procedure
+
+This local testing procedure relies on [Kind](https://kind.sigs.k8s.io/) to create a local Kubernetes cluster. If you don't have Kind installed follow the link to install it for your machine. You can deploy and test this in any local k8s cluster following a similar procedure
 
       ```bash
       kind create cluster --name operator-test
@@ -147,12 +148,13 @@
 ## Teardown (EKS Sandbox)
 
 When you’re done, you can remove the operator and related resources:
-
+```bash
 kubectl delete deployment namespace-operator
 kubectl delete serviceaccount default
 kubectl delete clusterrolebinding namespace-operator
 kubectl delete clusterrole namespace-operator
 kubectl delete crd namespaceconfigs.example.com
+```
 
 ### (Optional) Clean up ECR image
 ```bash
